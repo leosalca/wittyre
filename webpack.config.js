@@ -20,7 +20,7 @@ module.exports = {
                 },
             },
             {
-                test: /\.ts$/,
+                test: /\.tsx$/,
                 exclude: /node_modules/,
                 use: "ts-loader",
             },
