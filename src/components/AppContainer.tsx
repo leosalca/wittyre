@@ -1,13 +1,17 @@
 import * as React from 'react'
-import { Container } from '@chakra-ui/react'
+import { Container, Flex } from '@chakra-ui/react'
 import TopNavBar from './TopNavBar'
+import SideNavMenu from './SideNavMenu'
 import MainContainer from './MainContainer'
 
 export default function AppContainer() {
     return (
-        <Container maxW="container.xl" centerContent>
+        <Container maxW="100%" centerContent>
             <TopNavBar />
-            <MainContainer />
+            <Flex direction="row" flexWrap="nowrap">
+                <SideNavMenu />
+                <MainContainer />
+            </Flex>
         </Container>
     )
 }
