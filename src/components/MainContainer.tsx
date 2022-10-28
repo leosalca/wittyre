@@ -4,9 +4,12 @@ import PropertyCard from "./PropertyCard";
 
 export default function MainContainer() {
     return (
-        <Container maxW="container.xl">
-            <PropertyCard />
-            <PropertyCard />
+        <Container maxW="container.xl" centerContent>
+            <Flex flexWrap="wrap" flexFlow="center">
+                <PropertyCard />
+                <PropertyCard />
+                <PropertyCard />
+            </Flex>
         </Container>
     );
 }   
