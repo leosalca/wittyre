@@ -5,11 +5,16 @@ import PropertyCard from "./PropertyCard";
 export default function MainContainer() {
     return (
         <Container maxW="container.xl" centerContent>
-            <Flex flexWrap="wrap" flexFlow="center">
+            <Box 
+                display="grid"  
+                gridGap={1}
+                gridTemplateColumns="repeat(auto-fill, minmax(270px, 1fr))"
+                w="100%"
+                >
                 <PropertyCard />
                 <PropertyCard />
                 <PropertyCard />
-            </Flex>
+            </Box>
         </Container>
     );
 }   

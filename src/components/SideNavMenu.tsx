@@ -5,7 +5,7 @@ import { TbMapSearch } from 'react-icons/tb'
 
 export default function SideNavMenu() {
   return (
-    <Flex direction="column" height="100%" gap="10px">
+    <Flex direction="column" height="100%" gap="10px" m="4">
         <IconButton aria-label="Show maps" icon={<TbMapSearch />}/>
         <IconButton aria-label="Show charts" icon={<GoGraph />} size="md" />
     </Flex>

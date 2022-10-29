@@ -8,7 +8,7 @@ export default function AppContainer() {
     return (
         <Container maxW="100%" centerContent>
             <TopNavBar />
-            <Flex direction="row" flexWrap="nowrap">
+            <Flex w="100%" direction="row" flexWrap="nowrap">
                 <SideNavMenu />
                 <MainContainer />
             </Flex>

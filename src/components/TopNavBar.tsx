@@ -8,7 +8,7 @@ export default function TopNavBar() {
     return (
         <Container maxW="container.xl" m="0 10px 40px 10px">
             <Flex>
-                <Heading size="md">WittyRE</Heading>
+                <Heading size="md">WittyRe</Heading>
                 <Spacer />
                 <Input placeholder="Search Homes" width="auto"/>
                 <Spacer />
