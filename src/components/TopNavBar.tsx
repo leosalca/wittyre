@@ -1,42 +1,58 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Button, Container, Flex, Heading, IconButton, Input, Link, Spacer, Stack, Text } from '@chakra-ui/react';
 import { BiHomeSmile } from 'react-icons/bi';
+import { TbListSearch } from 'react-icons/tb';
 import { useBreakpointValue } from '@chakra-ui/react'
+import AutoCompleteList from './AutoCompleteList';
+
 
 
 
 export default function TopNavBar() {
 
-    const isMobile = useBreakpointValue({ base: true, md: false })
-    const [searchInput, setSearchInput] = React.useState('');
+    const isMobile = useBreakpointValue({ base: true, md: false });
+    const [searchInput, setSearchInput] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    
+
+    // useEffect(() => {}, []);
+        
 
     let baseUrl = 'https://realty-in-us.p.rapidapi.com/locations/v2/auto-complete?input=',
         encodedUserQueryUrl = '';
-
-    const handleSearchInput = (input: string) => {
-        let encodedUserQuery = encodeURIComponent(input);
-        encodedUserQueryUrl = baseUrl + encodedUserQuery + '&limit=10';
-        return encodedUserQueryUrl;
-    }
-
     const options = {
         method: 'GET',
         headers: {
-          'X-RapidAPI-Key': '848f4a027dmsh350df67252ac206p16221fjsn63d91afaef1c',
-          'X-RapidAPI-Host': 'realty-in-us.p.rapidapi.com'
+        'X-RapidAPI-Key': '848f4a027dmsh350df67252ac206p16221fjsn63d91afaef1c',
+        'X-RapidAPI-Host': 'realty-in-us.p.rapidapi.com'
         }
-      };
+    };
     
+
+    const encodeSearchInput = (input: string) => {
+        let encodedUserInput = encodeURIComponent(input);
+        encodedUserQueryUrl = baseUrl + encodedUserInput + '&limit=10';
+        return encodedUserQueryUrl;
+    }
    
-    
     const handleSearch = () => {
-        const searchUrl = handleSearchInput(searchInput);
+        const searchUrl = encodeSearchInput(searchInput);
         console.log(searchUrl);
         fetch(searchUrl, options)
         .then(response => response.json())
-        .then(response => console.log(response))
+        .then(response => {
+            console.log(response);
+            setSearchResults([...response.autocomplete]);
+        })
         .catch(err => console.error(err)); 
+    }
+
+    const testAPIGateway = () => {
+        fetch('https://6siln54so2.execute-api.us-east-2.amazonaws.com/returnListGeoLocation')
+        .then(response => response.json())
+        .then(response => console.log(response))
+        .catch(err => console.error(err));
     }
 
     return (
@@ -44,10 +60,22 @@ export default function TopNavBar() {
             <Flex>
                 <Heading size="md">WittyRe</Heading>
                 <Spacer />
-                <Input  placeholder="Search Homes" width="auto"
-                    onChange={event => setSearchInput(event.target.value)}
-                />
-                <Button onClick={handleSearch} colorScheme="teal" variant="solid" size="md" ml="10px">Search</Button>
+                <IconButton aria-label="AutoCompleteList" icon={<TbListSearch />} />
+                <Spacer /> 
+                <Stack>
+                    <Input  placeholder="Search Homes" width="auto"
+                        onChange={event => setSearchInput(event.target.value)}
+                    />
+                    <AutoCompleteList list={searchResults} />
+                </Stack>
+                <Button 
+                    onClick={handleSearch} 
+                    colorScheme="teal" 
+                    variant="solid" 
+                    size="md" 
+                    ml="10px"
+                    >Search
+                </Button>
                 <Spacer />
                 {isMobile
                     ?(
