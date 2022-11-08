@@ -5,6 +5,7 @@ import { BiHomeSmile, BiSearchAlt } from 'react-icons/bi';
 import { useBreakpointValue } from '@chakra-ui/react'
 import AutoCompleteList from './AutoCompleteList';
 import { MdCalculate } from 'react-icons/md';
+import { CgMenu } from 'react-icons/cg';
 
 
 
@@ -12,6 +13,7 @@ import { MdCalculate } from 'react-icons/md';
 export default function TopNavBar() {
 
     const isMobile = useBreakpointValue({ base: true, md: false });
+    const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     
@@ -51,10 +53,10 @@ export default function TopNavBar() {
     return (
         <Container maxW="container.xl" m="0 10px 40px 10px">
             <Flex alignItems='flex-start'>
-                <Heading size="md">WittyRe</Heading>
+                <Heading size="md" m={1}>WittyRe</Heading>
                 <Spacer />
-                <Stack maxW='400px'>
-                    <Stack direction='row' spacing={1} minW={isMobile ? '250px' : '400px'}>
+                <Stack maxW='400px' marginRight={1} minW={isMobile ? '250px' : isTablet ? '300px' : '400px'}>
+                    <Stack direction='row' spacing={1}>
                         <Input 
                             placeholder="Search Homes" 
                             onChange={event => setSearchInput(event.target.value)}
@@ -70,7 +72,7 @@ export default function TopNavBar() {
                         ></IconButton>
                     </Stack>
                     {searchResults.length > 0 ? (
-                    <Stack direction='row' spacing={1} minW={isMobile ? '250px' : '400px'}>
+                    <Stack direction='row' spacing={1}>
                         <AutoCompleteList data={searchResults} />
                         <IconButton 
                             aria-label='Search Homes'
@@ -88,9 +90,10 @@ export default function TopNavBar() {
                 {isMobile ? (
                 <Stack direction="row" align="center">
                     <IconButton aria-label="Home" icon={<BiHomeSmile />} />
+                    <IconButton aria-label="Menu" icon={<CgMenu />} />
                 </Stack>
                 ):(
-                <Stack direction="row" spacing={4}>
+                <Stack direction="row" spacing={2}>
                     <Button leftIcon={<BiHomeSmile />}>Homes</Button>
                     <Button variant="outline">Sign In</Button>
                     <Button variant="ghost">Sign Up</Button>
