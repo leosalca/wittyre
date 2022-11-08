@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Box, Button, Container, Flex, Heading, IconButton, Input, Link, Spacer, Stack, Text } from '@chakra-ui/react';
-import { BiHomeSmile } from 'react-icons/bi';
-import { TbListSearch } from 'react-icons/tb';
+import { BiHomeSmile, BiSearchAlt } from 'react-icons/bi';
 import { useBreakpointValue } from '@chakra-ui/react'
 import AutoCompleteList from './AutoCompleteList';
+import { MdCalculate } from 'react-icons/md';
 
 
 
@@ -20,7 +20,8 @@ export default function TopNavBar() {
         
 
     let baseUrl = 'https://realty-in-us.p.rapidapi.com/locations/v2/auto-complete?input=',
-        encodedUserQueryUrl = '';
+    encodedUserQueryUrl = '';
+
     const options = {
         method: 'GET',
         headers: {
@@ -29,7 +30,6 @@ export default function TopNavBar() {
         }
     };
     
-
     const encodeSearchInput = (input: string) => {
         let encodedUserInput = encodeURIComponent(input);
         encodedUserQueryUrl = baseUrl + encodedUserInput + '&limit=10';
@@ -48,49 +48,55 @@ export default function TopNavBar() {
         .catch(err => console.error(err)); 
     }
 
-    const testAPIGateway = () => {
-        fetch('https://6siln54so2.execute-api.us-east-2.amazonaws.com/returnListGeoLocation')
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
-    }
-
     return (
         <Container maxW="container.xl" m="0 10px 40px 10px">
-            <Flex>
+            <Flex alignItems='flex-start'>
                 <Heading size="md">WittyRe</Heading>
                 <Spacer />
-                <IconButton aria-label="AutoCompleteList" icon={<TbListSearch />} />
-                <Spacer /> 
-                <Stack>
-                    <Input  placeholder="Search Homes" width="auto"
-                        onChange={event => setSearchInput(event.target.value)}
-                    />
-                    <AutoCompleteList list={searchResults} />
+                <Stack maxW='400px'>
+                    <Stack direction='row' spacing={1} minW={isMobile ? '250px' : '400px'}>
+                        <Input 
+                            placeholder="Search Homes" 
+                            onChange={event => setSearchInput(event.target.value)}
+                        />
+                        <IconButton 
+                            aria-label='Search Homes'
+                            onClick={handleSearch} 
+                            colorScheme="teal" 
+                            variant="solid" 
+                            size="md" 
+                            ml="10px"
+                            icon={<BiSearchAlt />}
+                        ></IconButton>
+                    </Stack>
+                    {searchResults.length > 0 ? (
+                    <Stack direction='row' spacing={1} minW={isMobile ? '250px' : '400px'}>
+                        <AutoCompleteList data={searchResults} />
+                        <IconButton 
+                            aria-label='Search Homes'
+                            onClick={handleSearch} 
+                            colorScheme="teal" 
+                            variant="outline" 
+                            size="md" 
+                            ml="10px"
+                            icon={<MdCalculate />}
+                        ></IconButton>
+                    </Stack>
+                    ) : (null)}
                 </Stack>
-                <Button 
-                    onClick={handleSearch} 
-                    colorScheme="teal" 
-                    variant="solid" 
-                    size="md" 
-                    ml="10px"
-                    >Search
-                </Button>
                 <Spacer />
-                {isMobile
-                    ?(
-                    <Stack direction="row" spacing={4} align="center">
-                        <IconButton aria-label="Home" icon={<BiHomeSmile />} />
-                    </Stack>
-                    ) 
-                    :(
-                    <Stack direction="row" spacing={4}>
-                        <Button leftIcon={<BiHomeSmile />}>Homes</Button>
-                        <Button variant="outline">Sign In</Button>
-                        <Button variant="ghost">Sign Up</Button>
-                        <Button variant="link">About</Button>
-                    </Stack>
-                    )
+                {isMobile ? (
+                <Stack direction="row" align="center">
+                    <IconButton aria-label="Home" icon={<BiHomeSmile />} />
+                </Stack>
+                ):(
+                <Stack direction="row" spacing={4}>
+                    <Button leftIcon={<BiHomeSmile />}>Homes</Button>
+                    <Button variant="outline">Sign In</Button>
+                    <Button variant="ghost">Sign Up</Button>
+                    <Button variant="link">About</Button>
+                </Stack>
+                )
                 }
             </Flex>
         </Container>
