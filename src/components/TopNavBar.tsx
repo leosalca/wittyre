@@ -50,6 +50,10 @@ export default function TopNavBar() {
         .catch(err => console.error(err)); 
     }
 
+    const handleSelection = (e: any) => {
+        console.log('hello');
+    }
+
     return (
         <Container maxW="container.xl" m="0 10px 40px 10px">
             <Flex alignItems='flex-start'>
@@ -76,7 +80,7 @@ export default function TopNavBar() {
                         <AutoCompleteList data={searchResults} />
                         <IconButton 
                             aria-label='Search Homes'
-                            onClick={handleSearch} 
+                            onClick={handleSelection} 
                             colorScheme="teal" 
                             variant="outline" 
                             size="md" 
