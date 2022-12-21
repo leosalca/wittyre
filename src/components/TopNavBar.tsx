@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Box, Button, Container, Flex, Heading, IconButton, Input, Link, Spacer, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Container, Flex, Heading, IconButton, Input, Link, Spacer, Stack, Text, Menu, MenuButton, MenuList, MenuItem  } from '@chakra-ui/react';
 import { BiHomeSmile, BiSearchAlt } from 'react-icons/bi';
 import { useBreakpointValue } from '@chakra-ui/react'
 import AutoCompleteList from './AutoCompleteList';
@@ -16,6 +16,7 @@ export default function TopNavBar() {
     const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [selectedItem, setSelectedItem] = useState('');
     
 
     // useEffect(() => {}, []);
@@ -32,12 +33,17 @@ export default function TopNavBar() {
         }
     };
     
+    // This function encodes the user's input to be used in the API call that return a list of "autocomplete" results.
     const encodeSearchInput = (input: string) => {
         let encodedUserInput = encodeURIComponent(input);
+        // Limit the number of results to 10
         encodedUserQueryUrl = baseUrl + encodedUserInput + '&limit=10';
         return encodedUserQueryUrl;
     }
    
+    /* This function is called when the user clicks the search button. It's using Rapid API's "Realty in US" to get the search results. 
+    This first search step is to receive a proper query to then use on another API. The query depends on what the user wants to search.
+    i.e. zip code, city, a specific address */
     const handleSearch = () => {
         const searchUrl = encodeSearchInput(searchInput);
         console.log(searchUrl);
@@ -50,17 +56,25 @@ export default function TopNavBar() {
         .catch(err => console.error(err)); 
     }
 
-    const handleSelection = (e: any) => {
-        console.log('hello');
+    const handleSelection = (event: React.ChangeEvent<HTMLSelectElement>) => { 
+        setSelectedItem(event.target.value);
     }
 
+    const handleSelSearch = (e: any, selectedItem: any) => {
+        console.log(selectedItem);
+    }
+        //Removed padding from TopNavBar Container. App already has padding.
     return (
-        <Container maxW="container.xl" m="0 10px 40px 10px">
+        <Container maxW="container.xl" m="20px 10px 40px 10px" p={0}>
+            {/* aligns items in NavBar to the top */}
             <Flex alignItems='flex-start'>
-                <Heading size="md" m={1}>WittyRe</Heading>
+                {/* Logo should go here */}
+                {isMobile ? (<Heading size="4xl" m={1} fontSize="16px">WRE</Heading>) 
+                : (<Heading size="4xl" m={1} fontSize="16px">WittyRE</Heading>)}
                 <Spacer />
-                <Stack maxW='400px' marginRight={1} minW={isMobile ? '250px' : isTablet ? '300px' : '400px'}>
-                    <Stack direction='row' spacing={1}>
+                <Stack maxW='400px' marginRight={2} minW={isMobile ? '150px' : isTablet ? '300px' : '400px'}>
+                    {/* Search bar */}
+                    <Stack direction='row' spacing={2}>
                         <Input 
                             placeholder="Search Homes" 
                             onChange={event => setSearchInput(event.target.value)}
@@ -75,15 +89,16 @@ export default function TopNavBar() {
                             icon={<BiSearchAlt />}
                         ></IconButton>
                     </Stack>
+                    {/* Search results */}
                     {searchResults.length > 0 ? (
-                    <Stack direction='row' spacing={1}>
-                        <AutoCompleteList data={searchResults} />
+                    <Stack direction='row' spacing={2}>
+                        <AutoCompleteList data={searchResults}/>
                         <IconButton 
                             aria-label='Search Homes'
-                            onClick={handleSelection} 
-                            colorScheme="teal" 
-                            variant="outline" 
-                            size="md" 
+                            onClick={(e) => {handleSelSearch(e, selectedItem)}}
+                            colorScheme="teal"
+                            variant="outline"
+                            size="md"
                             ml="10px"
                             icon={<MdCalculate />}
                         ></IconButton>
@@ -91,16 +106,21 @@ export default function TopNavBar() {
                     ) : (null)}
                 </Stack>
                 <Spacer />
+                {/* Mobile Menu */}
                 {isMobile ? (
-                <Stack direction="row" align="center">
-                    <IconButton aria-label="Home" icon={<BiHomeSmile />} />
-                    <IconButton aria-label="Menu" icon={<CgMenu />} />
-                </Stack>
+                <Menu>
+                    <MenuButton as={IconButton} aria-label="Options" icon={<CgMenu />} />
+                    <MenuList minW="320px">
+                        <MenuItem minH="40px">Sign up</MenuItem>
+                        <MenuItem minH="40px">Sign in</MenuItem>
+                        <MenuItem minH="40px">About</MenuItem>
+                    </MenuList>
+                </Menu>
                 ):(
                 <Stack direction="row" spacing={2}>
                     <Button leftIcon={<BiHomeSmile />}>Homes</Button>
-                    <Button variant="outline">Sign In</Button>
-                    <Button variant="ghost">Sign Up</Button>
+                    <Button variant="outline">Sign up</Button>
+                    <Button variant="ghost">Sign in</Button>
                     <Button variant="link">About</Button>
                 </Stack>
                 )

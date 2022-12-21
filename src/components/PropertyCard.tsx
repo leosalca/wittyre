@@ -3,7 +3,7 @@ import { Box, Flex, Heading, Image, Link, Spacer, Stack, Text } from '@chakra-ui
 
 export default function PropertyCard() {
   return (
-        <Box boxShadow="md" rounded="md" p="1">
+        <Box boxShadow="md" rounded="md" p="1" maxW='sm'>
             <Image src="https://bit.ly/2Z4KKcF" alt="Segun Adebayo" />
             <Box p="6">
                 <Text fontSize="xl" fontWeight="semibold" lineHeight="short">
