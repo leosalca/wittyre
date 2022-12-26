@@ -23,6 +23,11 @@
       "StackName": "amplify-wittyreapp-devtwo-164407",
       "StackId": "arn:aws:cloudformation:us-west-2:334884397510:stack/amplify-wittyreapp-devtwo-164407/5d63aef0-8189-11ed-bbc2-0228ece3cbe9",
       "AmplifyAppId": "d1g6emchlfof0h"
+    },
+    "categories": {
+      "auth": {
+        "wittyreapp5ba531ac": {}
+      }
     }
   }
 }

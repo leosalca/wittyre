@@ -4,13 +4,12 @@ import { Box, Button, Container, Flex, Heading, IconButton, Input, Link, Spacer,
 import { BiHomeSmile, BiSearchAlt } from 'react-icons/bi';
 import { useBreakpointValue } from '@chakra-ui/react'
 import AutoCompleteList from './AutoCompleteList';
-import { MdCalculate } from 'react-icons/md';
+import { MdOutlineDataSaverOff } from 'react-icons/md';
 import { CgMenu } from 'react-icons/cg';
 
 
 
-
-export default function TopNavBar() {
+export default function TopNavBar( amplifySignOut: any) {
 
     const isMobile = useBreakpointValue({ base: true, md: false });
     const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
@@ -60,7 +59,7 @@ export default function TopNavBar() {
         setSelectedItem(event.target.value);
     }
 
-    const handleSelSearch = (e: any, selectedItem: any) => {
+    const handleSelSearch = (e: any) => {
         console.log(selectedItem);
     }
         //Removed padding from TopNavBar Container. App already has padding.
@@ -95,12 +94,12 @@ export default function TopNavBar() {
                         <AutoCompleteList data={searchResults}/>
                         <IconButton 
                             aria-label='Search Homes'
-                            onClick={(e) => {handleSelSearch(e, selectedItem)}}
+                            onClick={(e) => {handleSelection}}
                             colorScheme="teal"
                             variant="outline"
                             size="md"
                             ml="10px"
-                            icon={<MdCalculate />}
+                            icon={<MdOutlineDataSaverOff />}
                         ></IconButton>
                     </Stack>
                     ) : (null)}
@@ -111,16 +110,14 @@ export default function TopNavBar() {
                 <Menu>
                     <MenuButton as={IconButton} aria-label="Options" icon={<CgMenu />} />
                     <MenuList minW="320px">
-                        <MenuItem minH="40px">Sign up</MenuItem>
-                        <MenuItem minH="40px">Sign in</MenuItem>
+                        <MenuItem minH="40px" onClick={amplifySignOut.amplifySignOut}>Sign out</MenuItem>
                         <MenuItem minH="40px">About</MenuItem>
                     </MenuList>
                 </Menu>
                 ):(
                 <Stack direction="row" spacing={2}>
                     <Button leftIcon={<BiHomeSmile />}>Homes</Button>
-                    <Button variant="outline">Sign up</Button>
-                    <Button variant="ghost">Sign in</Button>
+                    <Button variant="outline" onClick={amplifySignOut.amplifySignOut}>Sign out</Button>       
                     <Button variant="link">About</Button>
                 </Stack>
                 )

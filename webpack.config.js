@@ -24,10 +24,14 @@ module.exports = {
                 exclude: /node_modules/,
                 use: "ts-loader",
             },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"],
+            },
         ],
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".jsx", ".js"],
+        extensions: [".tsx", ".ts", ".jsx", ".js", ".css"]
     },
     plugins: [
         new HtmlWebpackPlugin({
