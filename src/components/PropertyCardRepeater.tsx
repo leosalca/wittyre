@@ -4,7 +4,7 @@ import { SimpleGrid } from '@chakra-ui/react'
 
 export default function PropertyCardRepeater() {
   return (
-    <SimpleGrid minChildWidth="280px" spacing="30px">
+    <SimpleGrid minChildWidth="250px" spacing="30px">
         <PropertyCard />
         <PropertyCard />
         <PropertyCard />
