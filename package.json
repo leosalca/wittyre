@@ -21,8 +21,10 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^4.3.1",
     "@chakra-ui/react": "^2.3.6",
+    "@chakra-ui/select": "^2.0.15",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@reduxjs/toolkit": "^1.9.1",
     "aws-amplify": "^5.0.7",
     "aws-sdk": "^2.1244.0",
     "express": "^4.18.2",
@@ -30,7 +32,9 @@
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^4.6.0"
+    "react-icons": "^4.6.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.6",

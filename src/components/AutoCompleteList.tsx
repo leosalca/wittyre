@@ -1,24 +1,15 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Box, Button, Container, Flex, GridItem, Heading, IconButton, Input, Link, Select, Spacer, Stack, Text } from '@chakra-ui/react';
-import { BiStreetView } from 'react-icons/bi';
-import { values } from 'lodash';
-import * as e from 'express';
+import { Select } from '@chakra-ui/select'
 
 export default function AutoCompleteList(list: {data: any}) {
     console.log(list.data.length);
-    const [selectedItem, setSelectedItem] = useState({});
-    console.log({selectedItem});
-    let selectedItemString = '';
-
-
-    const handleSelect = () => {
-        let selected = document.querySelector('#autocompleteSelect');
-        console.log('selected in handSelect: ', selected);
-        setSelectedItem(selected)
-        console.log('selectedItem:  ',selectedItem);
+    const [selectedItem, setSelectedItem] = useState('');
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedItem(e.target.value);
     }
 
+    console.log(selectedItem);
 
     const printOptionString = ({area_type, postal_code, street, city, state_code, country, full_address, neighborhood}: {area_type: string; postal_code: string; street: string; city: string; state_code: string; country: string; full_address: string; neighborhood: string}) => {
         let optionString = area_type === 'postal_code' ? postal_code.concat(' ', city, ' ', state_code, ' ', country) 
@@ -32,12 +23,11 @@ export default function AutoCompleteList(list: {data: any}) {
     }
     
     return (
-        <Select id='autocompleteSelect'placeholder='Select option' maxW='356px' onChange={handleSelect}>
+        <Select value={selectedItem} placeholder={'Select option'} maxW='356px' onChange={handleChange}>
             {list.data.map((item: any, index: number) => (
-                <option key={index} value={item}>
+                <option key={index} value={JSON.stringify(item)}>
                     {printOptionString(item)}
-                </option>
-            ))
+                </option>))
             }
         </Select>
     );

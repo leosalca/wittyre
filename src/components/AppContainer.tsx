@@ -6,22 +6,26 @@ import MainContainer from './MainContainer'
 import { Amplify } from 'aws-amplify'
 import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
-import awsmobile from '../aws-exports'
+import awsconfigure from '../aws-exports'
+import { Provider } from 'react-redux'
+import store from '../store'
 
-Amplify.configure(awsmobile)
+Amplify.configure(awsconfigure)
 
 export default function AppContainer() {
     return (
-        <Authenticator>
-            {({ signOut, user }) => ( 
-                <Container maxW="100%" centerContent>
-                    <TopNavBar amplifySignOut = {signOut} />
-                    <Flex w="100%" direction="row" flexWrap="nowrap">
-                        <SideNavMenu />
-                        <MainContainer />
-                    </Flex>
-                </Container>
-            )}
-        </Authenticator>
+        <Provider store={store}>
+            <Authenticator>
+                {({ signOut, user }) => ( 
+                    <Container maxW="100%" centerContent>
+                        <TopNavBar amplifySignOut = {signOut} />
+                        <Flex w="100%" direction="row" flexWrap="nowrap">
+                            <SideNavMenu />
+                            <MainContainer />
+                        </Flex>
+                    </Container>
+                )}
+            </Authenticator>
+        </Provider>
     )
 }
