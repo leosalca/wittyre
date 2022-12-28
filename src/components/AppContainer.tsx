@@ -8,7 +8,7 @@ import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
 import awsconfigure from '../aws-exports'
 import { Provider } from 'react-redux'
-import store from '../store'
+import store from '../store/store.js'
 
 Amplify.configure(awsconfigure)
 

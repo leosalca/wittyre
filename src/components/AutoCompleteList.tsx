@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { Select } from '@chakra-ui/select'
+import { useState } from 'react';
+import { Select } from '@chakra-ui/select';
 
 export default function AutoCompleteList(list: {data: any}) {
     console.log(list.data.length);
