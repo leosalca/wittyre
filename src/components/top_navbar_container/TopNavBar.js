@@ -9,7 +9,7 @@ import { CgMenu } from 'react-icons/cg';
 
 
 
-export default function TopNavBar( amplifySignOut: any) {
+export default function TopNavBar( amplifySignOut ) {
 
     const isMobile = useBreakpointValue({ base: true, md: false });
     const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
@@ -33,7 +33,7 @@ export default function TopNavBar( amplifySignOut: any) {
     };
     
     // This function encodes the user's input to be used in the API call that return a list of "autocomplete" results.
-    const encodeSearchInput = (input: string) => {
+    const encodeSearchInput = (input ) => {
         let encodedUserInput = encodeURIComponent(input);
         // Limit the number of results to 10
         encodedUserQueryUrl = baseUrl + encodedUserInput + '&limit=10';
@@ -55,11 +55,11 @@ export default function TopNavBar( amplifySignOut: any) {
         .catch(err => console.error(err)); 
     }
 
-    const handleSelection = (event: React.ChangeEvent<HTMLSelectElement>) => { 
+    const handleSelection = (event) => { 
         setSelectedItem(event.target.value);
     }
 
-    const handleSelSearch = (e: any) => {
+    const handleSelSearch = (e) => {
         console.log(selectedItem);
     }
         //Removed padding from TopNavBar Container. App already has padding.

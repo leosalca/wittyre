@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Container, Flex } from '@chakra-ui/react'
-import TopNavBar from './TopNavBar'
+import TopNavBar from './top_navbar_container/TopNavBar'
 import SideNavMenu from './SideNavMenu'
 import MainContainer from './MainContainer'
 import { Amplify } from 'aws-amplify'
